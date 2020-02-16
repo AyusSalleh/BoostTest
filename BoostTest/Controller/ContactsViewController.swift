@@ -24,7 +24,14 @@ class ContactsViewController: BaseViewController {
         configureTarget()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSingleContactVC", let controller = segue.destination as? SingleContactViewController {
+            controller.editContactId = (sender as? Contact)?.id
+        }
+    }
+    
     @IBAction func barBtnAddPressed(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "showSingleContactVC", sender: nil)
     }
     
     private func configureUI() {
@@ -74,6 +81,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let contact = viewModel.contacts[indexPath.row]
+        self.performSegue(withIdentifier: "showSingleContactVC", sender: contact)
     }
 }
 

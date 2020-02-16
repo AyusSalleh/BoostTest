@@ -14,6 +14,8 @@ class ContactsViewModel: BaseViewModel {
     
     var contacts: [Contact] = []
     
+    /// This function used to get contacts from local JSON file
+    /// - Parameter completion: Can be used to refresh UITableView/UICollectionView
     func getContacts(completion: @escaping ()->()) {
         helper.getContactData { [weak self] (contacts, error) in
             if let error = error {
@@ -25,6 +27,8 @@ class ContactsViewModel: BaseViewModel {
         }
     }
     
+    /// This function used to get row title from list of contacts
+    /// - Parameter indexPath: Pass indexPath
     func getCellTitle(indexPath: IndexPath) -> String {
         let contact = contacts[indexPath.row]
         return "\(contact.firstName) \(contact.lastName)"

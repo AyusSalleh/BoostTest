@@ -38,4 +38,20 @@ class Helper: NSObject {
         }
     }
     
+    func updateContactData(contacts: [Contact], completion: @escaping (_ error: HelperError? )->()) {
+        guard let filePath = jsonFilePath else {
+            completion(.error)
+            return
+        }
+        
+        do {
+            let encoder = JSONEncoder()
+            let jsonData = try encoder.encode(contacts)
+            try jsonData.write(to: filePath)
+            completion(nil)
+        } catch {
+            completion(.error)
+        }
+    }
+    
 }
